@@ -1,7 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Admin{% endblock %}
+{% block title %}Admin Dashboard{% endblock %}
 
 {% block body %}
-    <h1>Bienvenue sur l'espace Admin !</h1>
+<h1>Admin Dashboard</h1>
+
+<p>Total users: {{ usersCount }}</p>
+<p>Total posts: {{ postsCount }}</p>
+
+<nav>
+    <ul>
+        <li><a href="{{ path('admin_manage_users') }}">Manage Users</a></li>
+        <li><a href="{{ path('admin_manage_posts') }}">Manage Posts</a></li>
+    </ul>
+</nav>
 {% endblock %}

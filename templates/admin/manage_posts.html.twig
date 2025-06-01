@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage Posts{% endblock %}
+
+{% block body %}
+<h1>Manage Posts</h1>
+
+<p>Here, you can list, add, edit or delete posts.</p>
+
+{# Loop through posts when you fetch real data #}
+{# 
+<ul>
+  {% for post in posts %}
+    <li>{{ post.title }}</li>
+  {% endfor %}
+</ul>
+#}
+
+<a href="{{ path('admin_dashboard') }}">Back to Dashboard</a>
+{% endblock %}
