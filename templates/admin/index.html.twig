@@ -1,3 +1,5 @@
+{# templates/admin/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Admin Dashboard{% endblock %}
@@ -5,13 +7,13 @@
 {% block body %}
 <h1>Admin Dashboard</h1>
 
-<p>Total users: {{ usersCount }}</p>
-<p>Total posts: {{ postsCount }}</p>
+<p>Total Users: {{ usersCount }}</p>
+<p>Total Products: {{ productsCount }}</p>
 
 <nav>
     <ul>
         <li><a href="{{ path('admin_manage_users') }}">Manage Users</a></li>
-        <li><a href="{{ path('admin_manage_posts') }}">Manage Posts</a></li>
+        <li><a href="{{ path('admin_manage_products') }}">Manage Products</a></li>
     </ul>
 </nav>
 {% endblock %}

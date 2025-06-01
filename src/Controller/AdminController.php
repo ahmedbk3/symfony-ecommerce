@@ -1,7 +1,9 @@
+<?php
+
 namespace App\Controller;
 
 use App\Repository\UserRepository;
-use App\Repository\ProductRepository; // <-- change here
+use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,12 +15,12 @@ class AdminController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
-        $usersCount = $userRepository->count([]);
+        $usersCount    = $userRepository->count([]);
         $productsCount = $productRepository->count([]);
 
         return $this->render('admin/index.html.twig', [
-            'usersCount' => $usersCount,
-            'productsCount' => $productsCount,  // renamed
+            'usersCount'    => $usersCount,
+            'productsCount' => $productsCount,
         ]);
     }
 
@@ -34,14 +36,14 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/products', name: 'admin_manage_products')]  // changed route name
+    #[Route('/admin/products', name: 'admin_manage_products')]
     public function manageProducts(ProductRepository $productRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $products = $productRepository->findAll();
 
-        return $this->render('admin/manage_products.html.twig', [  // changed template name
+        return $this->render('admin/manage_products.html.twig', [
             'products' => $products,
         ]);
     }
