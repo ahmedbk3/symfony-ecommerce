@@ -1,0 +1,36 @@
+{# templates/admin/manage_products.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage Products{% endblock %}
+
+{% block body %}
+<h1>Manage Products</h1>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.stock ?: 'N/A' }}</td>
+                <td>{{ product.createdAt ? product.createdAt|date('Y-m-d H:i') : 'N/A' }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5">No products found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('admin_dashboard') }}">Back to Dashboard</a>
+{% endblock %}
