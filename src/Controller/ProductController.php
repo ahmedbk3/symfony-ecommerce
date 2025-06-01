@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 #[Route('/product')]
 #[IsGranted('ROLE_ADMIN')]
 class ProductController extends AbstractController
-{
+{   
     #[Route('/', name: 'app_product_index', methods: ['GET'])]
     public function index(ProductRepository $productRepository): Response
     {

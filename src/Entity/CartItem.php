@@ -24,6 +24,10 @@ class CartItem
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cartItems')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cart $cart = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +65,18 @@ class CartItem
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCart(): ?Cart
+    {
+        return $this->cart;
+    }
+
+    public function setCart(?Cart $cart): static
+    {
+        $this->cart = $cart;
 
         return $this;
     }
