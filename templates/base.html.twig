@@ -45,6 +45,16 @@
                             </li>
                         {% endif %}
                     </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('cart_index') }}">
+                                🛒 Cart
+                                {% if app.session.get('cart') %}
+                                    <span class="badge bg-primary">{{ app.session.get('cart')|length }}</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>

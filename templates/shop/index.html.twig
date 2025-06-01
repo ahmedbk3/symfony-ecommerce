@@ -42,6 +42,12 @@
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description|u.truncate(100, '...') }}</p>
                         <p class="fw-bold">{{ product.price }} DT</p>
+                        <form method="post" action="{{ path('cart_add', { id: product.id }) }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit" class="btn btn-sm btn-success mt-2">
+                                🛒 Add to Cart
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your Cart{% endblock %}
+
+{% block body %}
+<h1>Your Cart</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.product.price }} DT</td>
+                <td>
+                    <form method="post" action="{{ path('cart_update', {'id': item.product.id}) }}">
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+                <td>{{ item.product.price * item.quantity }} DT</td>
+                <td>
+                    <a href="{{ path('cart_remove', {'id': item.product.id}) }}">Remove</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Your cart is empty.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total: {{ total }} DT</h3>
+<a href="{{ path('app_homepage') }}">Continue Shopping</a>
+{% endblock %}
