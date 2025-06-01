@@ -21,6 +21,34 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function findByFilters(?string $name, ?float $minPrice, ?float $maxPrice, ?string $sortBy = null, ?string $order = null): array
+{
+    $qb = $this->createQueryBuilder('p');
+
+    if ($name) {
+        $qb->andWhere('p.name = :name')
+           ->setParameter('name', $name);
+    }
+
+    if ($minPrice !== null) {
+        $qb->andWhere('p.price >= :min')
+           ->setParameter('min', $minPrice);
+    }
+
+    if ($maxPrice !== null) {
+        $qb->andWhere('p.price <= :max')
+           ->setParameter('max', $maxPrice);
+    }
+
+
+    if (in_array($sortBy, ['price', 'name']) && in_array(strtolower($order), ['asc', 'desc'])) {
+        $qb->orderBy('p.' . $sortBy, $order);
+    }
+
+    return $qb->getQuery()->getResult();
+}
+
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */

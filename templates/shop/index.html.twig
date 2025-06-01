@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="mb-4">Our Products</h2>
+    <a href="{{ path('shop_products', { sort_by: 'price', order: 'asc' }) }}">Sort by Price ↑</a>
+    <a href="{{ path('shop_products', { sort_by: 'price', order: 'desc' }) }}">Sort by Price ↓</a>
+    <a href="{{ path('shop_products', { sort_by: 'name', order: 'asc' }) }}">Sort by Name ↑</a>
+    <a href="{{ path('shop_products', { sort_by: 'name', order: 'desc' }) }}">Sort by Name ↓</a>
+
+    <form method="get" class="row mb-4 g-2">
+        <div class="col">
+            <input type="text" name="name" placeholder="Name" class="form-control" value="{{ app.request.get('name') }}">
+        </div>
+        <div class="col">
+            <input type="number" step="0.01" name="min_price" placeholder="Min Price" class="form-control" value="{{ app.request.get('min_price') }}">
+        </div>
+        <div class="col">
+            <input type="number" step="0.01" name="max_price" placeholder="Max Price" class="form-control" value="{{ app.request.get('max_price') }}">
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+    </form>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for product in products %}
+            <div class="col">
+                <div class="card h-100">
+                    {% if product.image %}
+                        <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|u.truncate(100, '...') }}</p>
+                        <p class="fw-bold">{{ product.price }} DT</p>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No products found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
