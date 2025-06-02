@@ -36,8 +36,9 @@
             <div class="col">
                 <div class="card h-100">
                     {% if product.image %}
-                        <img src="{{ product.image }}" class="card-img-top" alt="{{ product.name }}">
-                    {% endif %}
+    <img src="{{ asset('uploads/images/' ~ product.image) }}" class="card-img-top" alt="{{ product.name }}">
+{% endif %}
+
                     <div class="card-body">
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description|u.truncate(100, '...') }}</p>
