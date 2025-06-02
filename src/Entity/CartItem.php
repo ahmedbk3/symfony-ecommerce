@@ -21,11 +21,11 @@ class CartItem
     private ?int $quantity = null;
 
     #[ORM\ManyToOne(inversedBy: 'cartItems', targetEntity: Cart::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]   // <-- nullable changed here
     private ?Cart $cart = null;
 
     #[ORM\ManyToOne(inversedBy: 'cartItems', targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]   // <-- nullable changed here
     private ?User $user = null;
 
     public function getId(): ?int
