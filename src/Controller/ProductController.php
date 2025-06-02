@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
@@ -11,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
 
 #[Route('/product')]
 #[IsGranted('ROLE_ADMIN')]
@@ -26,13 +27,33 @@ class ProductController extends AbstractController
     }
 
     #[Route('/new', name: 'app_product_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Upload image
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur lors de l\'upload de l\'image.');
+                }
+
+                $product->setImage($newFilename);
+            }
+
             $entityManager->persist($product);
             $entityManager->flush();
 

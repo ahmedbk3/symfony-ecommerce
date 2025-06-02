@@ -13,20 +13,20 @@ class CartItem
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cartItems')]
+    #[ORM\ManyToOne(inversedBy: 'cartItems', targetEntity: Product::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cartItems')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
-
-    #[ORM\ManyToOne(inversedBy: 'cartItems')]
+    #[ORM\ManyToOne(inversedBy: 'cartItems', targetEntity: Cart::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Cart $cart = null;
+
+    #[ORM\ManyToOne(inversedBy: 'cartItems', targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -41,7 +41,6 @@ class CartItem
     public function setProduct(?Product $product): static
     {
         $this->product = $product;
-
         return $this;
     }
 
@@ -53,19 +52,6 @@ class CartItem
     public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
-
         return $this;
     }
 
@@ -77,7 +63,17 @@ class CartItem
     public function setCart(?Cart $cart): static
     {
         $this->cart = $cart;
+        return $this;
+    }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
         return $this;
     }
 }

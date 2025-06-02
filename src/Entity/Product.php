@@ -40,6 +40,7 @@ class Product
     public function __construct()
     {
         $this->cartItems = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int

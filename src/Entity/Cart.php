@@ -15,7 +15,7 @@ class Cart
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\OneToOne(inversedBy: 'cart', targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
@@ -95,7 +95,6 @@ class Cart
     public function removeCartItem(CartItem $cartItem): static
     {
         if ($this->cartItems->removeElement($cartItem)) {
-            // set the owning side to null (unless already changed)
             if ($cartItem->getCart() === $this) {
                 $cartItem->setCart(null);
             }
