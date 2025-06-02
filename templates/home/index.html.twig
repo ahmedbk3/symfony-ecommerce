@@ -3,22 +3,33 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
+    <div class="container mt-5 text-center">
         {% for label, messages in app.flashes %}
             {% for message in messages %}
-                <div class="alert alert-{{ label }}">{{ message }}</div>
+                <div class="alert alert-{{ label }} my-3">
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endfor %}
 
         {% if app.user %}
-            <h2>Welcome back, {{ app.user.firstname ?? app.user.email }}!</h2>
-            <p><a href="{{ path('app_profile') }}">Go to your profile</a></p>
+            <h2 class="mb-3">Welcome back, <span class="text-primary">{{ app.user.firstname ?? app.user.email }}</span>!</h2>
+            <p><a href="{{ path('app_profile') }}" class="btn btn-custom">Go to your profile</a></p>
             {% if is_granted('ROLE_ADMIN') %}
-                <p><a href="{{ path('admin_dashboard') }}">Admin Dashboard</a></p>
+                <p><a href="{{ path('admin_dashboard') }}" class="btn btn-custom">Admin Dashboard</a></p>
             {% endif %}
         {% else %}
-            <h2>Welcome to Our Shop!</h2>
-            <p><a href="{{ path('app_login') }}">Login</a> or <a href="{{ path('app_register') }}">Register</a> to get started.</p>
+            <h2 class="mb-4">Welcome to <span class="text-primary">Our Shop</span>!</h2>
+            <p><a href="{{ path('app_login') }}" class="btn btn-custom me-2">Login</a>
+               <a href="{{ path('app_register') }}" class="btn btn-outline-primary">Register</a></p>
         {% endif %}
+
+        <hr class="my-4">
+
+        <div class="mt-5">
+            <h3>Featured Products</h3>
+            <p>Explore our latest collection of exclusive items.</p>
+            <a href="{{ path('shop_products') }}" class="btn btn-primary">Browse Products</a>
+        </div>
     </div>
 {% endblock %}

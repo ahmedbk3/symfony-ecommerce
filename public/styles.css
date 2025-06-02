@@ -1,0 +1,95 @@
+/* styles.css */
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(45deg, #007bff, #6610f2);
+}
+.navbar .nav-link {
+    color: #fff !important;
+    transition: color 0.3s;
+}
+.navbar .nav-link:hover {
+    color: #ffc107 !important;
+}
+.navbar-brand {
+    font-weight: 600;
+    color: #fff !important;
+    font-size: 1.5rem;
+}
+
+/* Buttons */
+.btn-custom {
+    background: #007bff;
+    color: #fff;
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    border: none;
+    transition: background 0.3s, transform 0.3s;
+}
+.btn-custom:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Flash messages */
+.alert {
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Forms */
+input, select, textarea {
+    border-radius: 8px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Footer */
+footer {
+    background-color: #343a40;
+    color: #ddd;
+    text-align: center;
+}
+
+/* Container spacing */
+.container {
+    max-width: 1140px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Optional: Smooth transition */
+* {
+    transition: all 0.3s ease;
+}
