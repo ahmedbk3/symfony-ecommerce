@@ -1,44 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Your Cart{% endblock %}
+{% block title %}🛒 Your Cart{% endblock %}
 
 {% block body %}
-<h1>Your Cart</h1>
+<div class="container py-5">
+    <h1 class="mb-4 text-center fw-bold">🛒 Your Shopping Cart</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in items %}
-            <tr>
-                <td>{{ item.product.name }}</td>
-                <td>{{ item.product.price }} DT</td>
-                <td>
-                    <form method="post" action="{{ path('cart_update', {'id': item.product.id}) }}">
-                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1">
-                        <button type="submit">Update</button>
-                    </form>
-                </td>
-                <td>{{ item.product.price * item.quantity }} DT</td>
-                <td>
-                    <a href="{{ path('cart_remove', {'id': item.product.id}) }}">Remove</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Your cart is empty.</td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+    {% if items is not empty %}
+        <div class="table-responsive shadow-sm">
+            <table class="table align-middle text-center table-hover border rounded">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price (DT)</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Subtotal</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td class="fw-semibold">{{ item.product.name }}</td>
+                            <td>{{ item.product.price }}</td>
+                            <td>
+                                <form method="post" action="{{ path('cart_update', {'id': item.product.id}) }}" class="d-flex justify-content-center align-items-center gap-2">
+                                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control form-control-sm w-50 text-center">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">⟳</button>
+                                </form>
+                            </td>
+                            <td class="fw-bold">{{ (item.product.price * item.quantity)|number_format(2, '.', ',') }}</td>
+                            <td>
+                                <a href="{{ path('cart_remove', {'id': item.product.id}) }}" class="btn btn-outline-danger btn-sm">🗑️</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-<h3>Total: {{ total }} DT</h3>
-<a href="{{ path('app_homepage') }}">Continue Shopping</a>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <a href="{{ path('app_homepage') }}" class="btn btn-secondary">← Continue Shopping</a>
+            <h4>Total: <span class="text-primary fw-bold">{{ total|number_format(2, '.', ',') }} DT</span></h4>
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <h3 class="text-muted">🛒 Your cart is empty.</h3>
+            <a href="{{ path('app_homepage') }}" class="btn btn-primary mt-3">Browse Products</a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
